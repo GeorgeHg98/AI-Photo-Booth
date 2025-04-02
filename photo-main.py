@@ -1,10 +1,10 @@
 from utils.template_loader import load_template
 from utils.face_detector import detect_faces
 from utils.image_merger import merge_faces_with_template
-import cv2 # For image processing and webcam access
-import os  # For image processing and webcam access
-from datetime import datetime  # For timestamping filenames
-import uuid  # For generating unique IDs
+import cv2 
+import os  
+from datetime import datetime  
+import uuid 
 
 
 def wait_for_trigger():
@@ -32,7 +32,7 @@ while True:
     trigger = wait_for_trigger()
     if trigger == "TRIGGERED":
         # Countdown before taking photo
-        for i in range(5, 0, -1):  # Countdown from 5 seconds
+        for i in range(5, 0, -1):  
             countdown_frame = frame.copy()  # Clone current frame for overlay
             cv2.putText(countdown_frame, f"{i}", (250, 250), cv2.FONT_HERSHEY_SIMPLEX, 4, (0, 0, 255), 5)
             cv2.imshow("Live Feed", countdown_frame)
@@ -42,12 +42,12 @@ while True:
         image = frame.copy()  # Capture the current frame
         break
     elif trigger is None:
-        cap.release()  # Release the webcam resource
-        cv2.destroyAllWindows()  # Close all OpenCV windows
+        cap.release() 
+        cv2.destroyAllWindows()  
         exit()
 
-cap.release()  # Release the webcam resource
-cv2.destroyAllWindows()  # Close all OpenCV windows
+cap.release()  
+cv2.destroyAllWindows()  
 
 all_faces = detect_faces(image)  # Detect all faces
 num_faces = len(all_faces)
@@ -67,10 +67,10 @@ face_images = all_faces[:len(face_slots)]  # Truncate extra faces if any
 final_image = merge_faces_with_template(template_image, face_images, face_slots)  # Merge detected faces with the template
 
 #Save the final composite image
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  # Generate timestamp
-unique_id = uuid.uuid4().hex[:6]  # Short unique identifier
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  
+unique_id = uuid.uuid4().hex[:6]  
 filename = f"photo_{timestamp}_{unique_id}.png"  # Construct unique filename
 output_path = os.path.join("output", filename)  # Combine path and filename
 os.makedirs("output", exist_ok=True)  # Ensure output directory exists
 cv2.imwrite(output_path, final_image)  # Write the image to disk
-print(f"Image saved to {output_path}")  # Notify the user
+print(f"Image saved to {output_path}") 
