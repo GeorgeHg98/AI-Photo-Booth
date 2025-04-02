@@ -6,20 +6,18 @@ import mediapipe as mp
 mp_face_detection = mp.solutions.face_detection
 
 class FaceDetector:
-    def _init_(self, method: str ="mediapipe"):
-        self.method = method.lower() # Store the detectopm method as a lowercase string
+    def __init__(self, method: str = "mediapipe"):
+        self.method = method.lower()  # Store the detection method as a lowercase string
         if self.method == "mediapipe":
             # Initialize MediaPipe Face Detection module
             self.detector = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
         else:
             raise NotImplementedError(f"Face detection method '{self.method}' is not implemented.")
         
-
     def detect_faces(self, image: np.ndarray) -> list:
-        # Dispatch to the appropiate internal method based on selected detection backend
-
+        # Dispatch to the appropriate internal method based on selected detection backend
         if self.method == "mediapipe":
-             return self.detect_faces_mediapipe(image)
+            return self._detect_faces_mediapipe(image)
         else:
             raise NotImplementedError(f"Face detection method '{self.method}' is not implemented.")
         
@@ -46,7 +44,7 @@ class FaceDetector:
                 x1 = max(0, x1 - int(margin * width))
                 y1 = max(0, y1 - int(margin * height))
                 x2 = min(w, x1 + int((1 + 2 * margin) * width))
-                y2 = min(h, y1 + int(( 1 + 2 * margin) * height))
+                y2 = min(h, y1 + int((1 + 2 * margin) * height))
 
                 # Extract the face image using the bounding box coordinates
                 face_crop = image[y1:y2, x1:x2]
@@ -54,11 +52,11 @@ class FaceDetector:
 
         return face_images  # Return the list of detected face images
 
-    def detect_faces(image: np.ndarray) -> list: 
-        """
+# Move this function outside the class
+def detect_faces_default(image: np.ndarray) -> list:
+    """
     Abstracted detection interface. This function can be called directly from outside
     the module to detect faces using the default method.
     """
-        detector = FaceDetector(method="mediapipe")
-        return detector.detect_faces(image)
-        
+    detector = FaceDetector(method="mediapipe")
+    return detector.detect_faces(image)
