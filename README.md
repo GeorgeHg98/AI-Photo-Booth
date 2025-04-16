@@ -87,7 +87,7 @@ Run it from bash or from the IDE
 - Add a new template image (e.g., template_3.png) to the templates/ directory.
 ### 2. Define face slots:
 - Create a corresponding JSON file (e.g., template_3.json) in the config/ directory.
-- Define the face slot positions and sizes:
+- Define the face slot positions and sizes (basic example below):
 ```json
 [
     { "x": 100, "y": 150, "w": 200, "h": 200 },
