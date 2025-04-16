@@ -1,0 +1,11 @@
+[
+    {
+      "x": 420,
+      "y": 420,
+      "w": 200,
+      "h": 200,
+    "face_mesh": true,
+    "landmarks": "mannequin_landmarks_1.json"
+    }
+  ]
+  
